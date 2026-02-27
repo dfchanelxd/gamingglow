@@ -1,0 +1,12 @@
+# GAMINGGLOW Robots.txt
+# https://gamingglow.id/robots.txt
+
+User-agent: *
+Allow: /
+
+# Disallow admin routes
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Sitemap
+Sitemap: https://gamingglow.id/sitemap.xml

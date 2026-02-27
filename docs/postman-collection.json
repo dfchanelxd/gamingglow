@@ -1,0 +1,326 @@
+{
+  "info": {
+    "_postman_id": "gamingglow-api-collection",
+    "name": "GAMINGGLOW API",
+    "description": "API Collection for GAMINGGLOW - Portal Download Game & Software PC Legal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@gamingglow.local\",\n  \"password\": \"Admin123!Staging\"\n}"
+            },
+            "description": "Login as admin. Returns JWT tokens in cookies. If 2FA is enabled, returns requires2FA flag."
+          },
+          "response": []
+        },
+        {
+          "name": "Verify 2FA",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@gamingglow.local\",\n  \"token\": \"123456\"\n}"
+            },
+            "description": "Verify 2FA token after initial login."
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "logout"]
+            },
+            "description": "Logout and invalidate session."
+          },
+          "response": []
+        },
+        {
+          "name": "Get 2FA Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/2fa",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "2fa"]
+            },
+            "description": "Check if 2FA is enabled for current user."
+          },
+          "response": []
+        },
+        {
+          "name": "Setup 2FA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/2fa",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "2fa"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"setup\"\n}"
+            },
+            "description": "Generate 2FA secret and QR code for setup."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "stats"]
+            },
+            "description": "Get dashboard statistics including downloads, products, storage usage."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Audit Logs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/logs?page=1&limit=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "logs"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "50"
+                }
+              ]
+            },
+            "description": "Get paginated audit logs."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products (Admin)",
+      "item": [
+        {
+          "name": "List Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/products?page=1&limit=20&status=published",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "products"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                },
+                {
+                  "key": "status",
+                  "value": "published"
+                }
+              ]
+            },
+            "description": "List products with pagination and filters."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "products"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Cyber Odyssey 2077\",\n  \"tagline\": \"Petualangan cyberpunk di masa depan yang gelap\",\n  \"description\": \"Game action RPG yang membawa Anda ke dunia dystopian...\",\n  \"type\": \"game\",\n  \"category\": \"action\",\n  \"publisher\": \"Neon Forge Studios\",\n  \"developer\": \"Neon Forge Studios\",\n  \"tags\": [\"cyberpunk\", \"open-world\", \"rpg\"],\n  \"languages\": [\"Indonesia\", \"English\"],\n  \"status\": \"draft\"\n}"
+            },
+            "description": "Create a new product."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "products"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"660e8400-e29b-41d4-a716-446655440000\",\n  \"status\": \"published\"\n}"
+            },
+            "description": "Update an existing product."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/products?id=660e8400-e29b-41d4-a716-446655440000",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "products"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "660e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Delete a product (superadmin only)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Public API",
+      "item": [
+        {
+          "name": "Get Product Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/public/products/cyber-odyssey-2077",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "public", "products", "cyber-odyssey-2077"]
+            },
+            "description": "Get public product details with releases and images."
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Download URL",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/generate-download",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "generate-download"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productSlug\": \"cyber-odyssey-2077\",\n  \"version\": \"1.0.5\",\n  \"email\": \"user@example.com\"\n}"
+            },
+            "description": "Generate presigned download URL for a product."
+          },
+          "response": []
+        },
+        {
+          "name": "Report DMCA",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/report-dmca",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "report-dmca"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"claimantName\": \"John Doe\",\n  \"claimantEmail\": \"john@example.com\",\n  \"claimantAddress\": \"123 Main St, City, Country\",\n  \"productSlug\": \"cyber-odyssey-2077\",\n  \"infringingMaterial\": \"The game uses my copyrighted music without permission...\",\n  \"originalMaterial\": \"My original music track released in 2023...\",\n  \"goodFaithStatement\": true,\n  \"accuracyStatement\": true,\n  \"signature\": \"John Doe\"\n}"
+            },
+            "description": "Submit a DMCA takedown request."
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ]
+}
