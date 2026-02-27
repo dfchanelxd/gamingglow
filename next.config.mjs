@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Output configuration
+  // Output configuration - standalone for server deployment
   output: 'standalone',
   
   // Image optimization
@@ -11,8 +11,6 @@ const nextConfig = {
       `${process.env.S3_BUCKET_NAME}.s3.amazonaws.com`,
     ].filter(Boolean),
     formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
 
   // Headers for security

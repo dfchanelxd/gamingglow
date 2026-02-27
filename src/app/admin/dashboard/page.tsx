@@ -60,12 +60,12 @@ export default function AdminDashboardPage() {
   const router = useRouter();
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     checkAuth();
-    fetchStats();
   }, []);
 
   async function checkAuth() {
@@ -78,6 +78,10 @@ export default function AdminDashboardPage() {
       const data = await response.json();
       if (data.success) {
         setUser(data.user);
+        setIsAuthenticated(true);
+        fetchStats();
+      } else {
+        router.push("/admin");
       }
     } catch (error) {
       router.push("/admin");
@@ -109,10 +113,13 @@ export default function AdminDashboardPage() {
     }
   }
 
-  if (isLoading) {
+  if (!isAuthenticated || isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neon-blue" />
+      <div className="min-h-screen flex items-center justify-center bg-navy-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-neon-blue mx-auto mb-4" />
+          <p className="text-slate-400">Memverifikasi akses...</p>
+        </div>
       </div>
     );
   }
